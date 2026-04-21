@@ -164,8 +164,29 @@ function setupAiPanel(container, spell) {
         addMessage("user", text);
         input.value = "";
 
+        setLoading(true);
+        const thinking = showThinking();
+
         const response = await chatAboutSpell(spell.index, history);
+
+        thinking.remove();
+        setLoading(false);
         addMessage("assistant", response);
+    }
+
+    function showThinking() {
+        const div = document.createElement("div");
+        div.className = "ai-message assistant thinking";
+        div.innerHTML = `<span>Thinking</span><span class="dots"><span>.</span><span>.</span><span>.</span></span>`;
+        thread.appendChild(div);
+        thread.scrollTop = thread.scrollHeight;
+        return div; // so we can remove it later
+    }
+
+    function setLoading(isLoading) {
+        explainBtn.disabled = isLoading;
+        sendBtn.disabled = isLoading;
+        input.disabled = isLoading;
     }
 
     aiBtn.addEventListener("click", () => {
@@ -174,9 +195,14 @@ function setupAiPanel(container, spell) {
 
     explainBtn.addEventListener("click", async () => {
         aiPanel.classList.add("open");
+        
+        setLoading(true);
+        const thinking = showThinking();
 
         const explanation = await getSpellExplanation(spell.index);
 
+        thinking.remove();
+        setLoading(false);
         addMessage("assistant", explanation);
     });
 
