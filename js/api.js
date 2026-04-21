@@ -87,9 +87,9 @@ export function fetchJson(endpoint) {
     return request(endpoint);
 }
 
-export async function postJsonAdmin(endpoint, data, method = "POST") {
+export async function postJson(endpoint, data, method = "POST") {
     return request(endpoint, {
         method,
         body: JSON.stringify(data)
-    }, true);
+    });
 }

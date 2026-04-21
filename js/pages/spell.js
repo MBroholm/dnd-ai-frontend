@@ -1,5 +1,5 @@
 import { getSpellByIndex } from "../services/spellService.js";
-import { getSpellExplanation } from "../services/aiSpellService.js";
+import { chatAboutSpell, getSpellExplanation } from "../services/aiSpellService.js";
 
 export async function render(container, params) {
     const index = params.get("index");
@@ -164,8 +164,7 @@ function setupAiPanel(container, spell) {
         addMessage("user", text);
         input.value = "";
 
-        // TEMP: reuse explanation endpoint
-        const response = await getSpellExplanation(spell.index);
+        const response = await chatAboutSpell(spell.index, history);
         addMessage("assistant", response);
     }
 
