@@ -43,8 +43,8 @@ function renderSpellHtml(spell) {
                     ${renderParagraphs(spell.desc)}
 
                     ${spell.higher_level?.length
-                        ? `<h3>At Higher Levels</h3>${renderParagraphs(spell.higher_level)}`
-                        : ""}
+            ? `<h3>At Higher Levels</h3>${renderParagraphs(spell.higher_level)}`
+            : ""}
 
                     <h3>Classes</h3>
                     <p>${spell.classes?.map(c => c.name).join(", ") || "None"}</p>
@@ -59,8 +59,12 @@ function renderSpellHtml(spell) {
                 <div class="ai-sidepanel-header">
                     <h3>AI Insights</h3>
                 </div>
-                <div id="ai-content" class="ai-content">
-                    <p>Click “Explain” to generate insights.</p>
+
+                <div id="ai-thread" class="ai-thread"></div>
+
+                <div class="ai-input-row">
+                    <input id="ai-input" type="text" placeholder="Ask something…" />
+                    <button id="ai-send-btn">Send</button>
                 </div>
             </aside>
         </div>
@@ -135,8 +139,35 @@ function renderAoe(aoe) {
 function setupAiPanel(container, spell) {
     const aiBtn = container.querySelector("#ai-panel-btn");
     const aiPanel = container.querySelector("#ai-sidepanel");
-    const aiContent = container.querySelector("#ai-content");
     const explainBtn = container.querySelector("#explain-btn");
+    const input = container.querySelector("#ai-input");
+    const sendBtn = container.querySelector("#ai-send-btn");
+    const thread = container.querySelector("#ai-thread");
+
+    let history = [];
+
+    function addMessage(role, content) {
+        history.push({ role, content });
+
+        const div = document.createElement("div");
+        div.className = `ai-message ${role}`;
+        div.innerHTML = marked.parse(content);
+        thread.appendChild(div);
+
+        thread.scrollTop = thread.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const text = input.value.trim();
+        if (!text) return;
+
+        addMessage("user", text);
+        input.value = "";
+
+        // TEMP: reuse explanation endpoint
+        const response = await getSpellExplanation(spell.index);
+        addMessage("assistant", response);
+    }
 
     aiBtn.addEventListener("click", () => {
         aiPanel.classList.toggle("open");
@@ -144,16 +175,15 @@ function setupAiPanel(container, spell) {
 
     explainBtn.addEventListener("click", async () => {
         aiPanel.classList.add("open");
-        aiContent.innerHTML = "<p>Generating explanation...</p>";
 
         const explanation = await getSpellExplanation(spell.index);
-        const html = marked.parse(explanation);
 
-        aiContent.innerHTML = `
-            <div class="card mt-4">
-                <div class="spell-explanation">${html}</div>
-            </div>
-        `;
+        addMessage("assistant", explanation);
+    });
+
+    sendBtn.addEventListener("click", sendMessage);
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") sendMessage();
     });
 }
 

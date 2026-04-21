@@ -460,3 +460,34 @@ textarea:focus {
     box-shadow: 0 0 18px rgba(74, 111, 165, 1);
     transform: scale(1.1);
 }
+
+/* Thread */
+.ai-thread {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.ai-message {
+    margin-bottom: 1rem;
+}
+
+.ai-message.user {
+    text-align: right;
+    color: var(--color-accent);
+}
+
+.ai-message.assistant {
+    text-align: left;
+}
+    
+.ai-input-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+#ai-input {
+    flex: 1;
+    padding: 0.5rem;
+}
