@@ -102,32 +102,6 @@ function renderDamage(damage) {
     `;
 }
 
-
-function setupAiPanel(container, spell) {
-    const aiBtn = container.querySelector("#ai-panel-btn");
-    const aiPanel = container.querySelector("#ai-sidepanel");
-    const aiContent = container.querySelector("#ai-content");
-    const explainBtn = container.querySelector("#explain-btn");
-
-    aiBtn.addEventListener("click", () => {
-        aiPanel.classList.toggle("open");
-    });
-
-    explainBtn.addEventListener("click", async () => {
-        aiPanel.classList.add("open");
-        aiContent.innerHTML = "<p>Generating explanation...</p>";
-
-        const explanation = await getSpellExplanation(spell.index);
-        const html = marked.parse(explanation);
-
-        aiContent.innerHTML = `
-            <div class="card mt-4">
-                <div class="spell-explanation">${html}</div>
-            </div>
-        `;
-    });
-}
-
 function renderError(container, message) {
     container.innerHTML = `<p>${message}</p>`;
 }
@@ -155,6 +129,32 @@ function renderAoe(aoe) {
         <p><strong>Type:</strong> ${aoe.type}</p>
         <p><strong>Size:</strong> ${aoe.size} ft</p>
     `;
+}
+
+
+function setupAiPanel(container, spell) {
+    const aiBtn = container.querySelector("#ai-panel-btn");
+    const aiPanel = container.querySelector("#ai-sidepanel");
+    const aiContent = container.querySelector("#ai-content");
+    const explainBtn = container.querySelector("#explain-btn");
+
+    aiBtn.addEventListener("click", () => {
+        aiPanel.classList.toggle("open");
+    });
+
+    explainBtn.addEventListener("click", async () => {
+        aiPanel.classList.add("open");
+        aiContent.innerHTML = "<p>Generating explanation...</p>";
+
+        const explanation = await getSpellExplanation(spell.index);
+        const html = marked.parse(explanation);
+
+        aiContent.innerHTML = `
+            <div class="card mt-4">
+                <div class="spell-explanation">${html}</div>
+            </div>
+        `;
+    });
 }
 
 export default { render };
