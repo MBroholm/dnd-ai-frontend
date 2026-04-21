@@ -353,6 +353,17 @@ textarea:focus {
 }
 
 /* --------------------------------------------------
+    SPELL PAGE LAYOUT
+-------------------------------------------------- */
+
+.spell-page {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-4);
+}
+
+/* --------------------------------------------------
     SPELL DETAILS
 -------------------------------------------------- */
 
@@ -387,4 +398,65 @@ textarea:focus {
 .spell-explanation ul {
     padding-left: 20px;
     margin-bottom: var(--space-4);
+}
+
+/* --------------------------------------------------
+    AI SIDEPANEL
+-------------------------------------------------- */
+
+/* Side panel */
+.ai-sidepanel {
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: width 0.3s ease, opacity 0.3s ease;
+    background: var(--color-bg-alt);
+    border-left: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0;
+}
+
+/* When open */
+.ai-sidepanel.open {
+    width: 500px;
+    opacity: 1;
+    padding: var(--space-4);
+}
+
+/* Header */
+.ai-sidepanel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* The AI button */
+.ai-button-position {
+    position: absolute;
+    right: -3rem;
+    top: 1rem;
+}
+
+.ai-spark {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+
+    background: radial-gradient(circle, #a8c6ff, #4a6fa5);
+    box-shadow: 0 0 12px rgba(74, 111, 165, 0.7);
+
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-4px); }
+    100% { transform: translateY(0); }
+}
+
+.ai-spark:hover {
+    box-shadow: 0 0 18px rgba(74, 111, 165, 1);
+    transform: scale(1.1);
 }
