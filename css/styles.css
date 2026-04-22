@@ -81,6 +81,7 @@ h4 {
 
 p {
     margin-bottom: var(--space-4);
+    text-align: justify;
 }
 
 a {
@@ -363,6 +364,37 @@ select:focus {
 .footer-links a:hover {
     color: var(--color-primary);
 }
+/* --------------------------------------------------
+    LOADING MESSAGE DOTS
+-------------------------------------------------- */
+
+.thinking .dots span {
+    opacity: 0.2;
+    animation: blink 1.4s infinite;
+    margin-right: 2px;
+}
+
+.thinking .dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.thinking .dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0.2;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.2;
+    }
+}
 
 /* --------------------------------------------------
     SPELL LIST
@@ -425,20 +457,6 @@ select:focus {
 
 .spell-detail .material {
     font-style: italic;
-}
-
-.spell-explanation h3 {
-    margin-top: var(--space-4);
-    color: var(--color-primary);
-}
-
-.spell-explanation p {
-    margin-bottom: var(--space-3);
-}
-
-.spell-explanation ul {
-    padding-left: 20px;
-    margin-bottom: var(--space-4);
 }
 
 /* --------------------------------------------------
@@ -539,32 +557,4 @@ select:focus {
 #ai-input {
     flex: 1;
     padding: 0.5rem;
-}
-
-.thinking .dots span {
-    opacity: 0.2;
-    animation: blink 1.4s infinite;
-    margin-right: 2px;
-}
-
-.thinking .dots span:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.thinking .dots span:nth-child(3) {
-    animation-delay: 0.4s;
-}
-
-@keyframes blink {
-    0% {
-        opacity: 0.2;
-    }
-
-    20% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0.2;
-    }
 }
