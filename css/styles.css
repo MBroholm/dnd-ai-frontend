@@ -81,7 +81,6 @@ h4 {
 
 p {
     margin-bottom: var(--space-4);
-    text-align: justify;
 }
 
 a {
@@ -364,6 +363,7 @@ select:focus {
 .footer-links a:hover {
     color: var(--color-primary);
 }
+
 /* --------------------------------------------------
     LOADING MESSAGE DOTS
 -------------------------------------------------- */
@@ -426,6 +426,10 @@ select:focus {
 /* --------------------------------------------------
     SPELL DETAILS
 -------------------------------------------------- */
+
+.spell-detail {
+    text-align: justify;
+}
 
 .spell-detail h2 {
     margin-top: 0;
