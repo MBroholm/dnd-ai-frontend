@@ -1,5 +1,6 @@
 import { getSpellByIndex } from "../services/spellService.js";
 import { chatAboutSpell, getSpellExplanation } from "../services/aiSpellService.js";
+import { renderThinkingMessage } from "../components/loadingDots.js";
 
 export async function render(container, params) {
     const index = params.get("index");
@@ -40,8 +41,8 @@ function renderSpellHtml(spell) {
                     ${renderParagraphs(spell.desc)}
                     
                     ${spell.higher_level?.length
-                    ? `<h3>At Higher Levels</h3>${renderParagraphs(spell.higher_level)}`
-                    : ""}
+            ? `<h3>At Higher Levels</h3>${renderParagraphs(spell.higher_level)}`
+            : ""}
 
                     ${renderDamage(spell.damage)}
                     ${renderDc(spell.dc)}
@@ -183,12 +184,10 @@ function setupAiPanel(container, spell) {
     }
 
     function showThinking() {
-        const div = document.createElement("div");
-        div.className = "ai-message assistant thinking";
-        div.innerHTML = `<span>Thinking</span><span class="dots"><span>.</span><span>.</span><span>.</span></span>`;
-        thread.appendChild(div);
+        const message = renderThinkingMessage("Thinking", "ai-message assistant thinking");
+        thread.appendChild(message);
         thread.scrollTop = thread.scrollHeight;
-        return div; // so we can remove it later
+        return message; // so we can remove it later
     }
 
     function setLoading(isLoading) {

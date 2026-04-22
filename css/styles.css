@@ -541,17 +541,17 @@ select:focus {
     padding: 0.5rem;
 }
 
-.ai-message.thinking .dots span {
+.thinking .dots span {
     opacity: 0.2;
     animation: blink 1.4s infinite;
     margin-right: 2px;
 }
 
-.ai-message.thinking .dots span:nth-child(2) {
+.thinking .dots span:nth-child(2) {
     animation-delay: 0.2s;
 }
 
-.ai-message.thinking .dots span:nth-child(3) {
+.thinking .dots span:nth-child(3) {
     animation-delay: 0.4s;
 }
 

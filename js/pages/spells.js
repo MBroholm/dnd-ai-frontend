@@ -1,4 +1,5 @@
 import { getSpellList } from "../services/spellService.js";
+import { renderThinkingMessage } from "../components/loadingDots.js";
 
 export async function render(container, params) {
     container.innerHTML = `
@@ -19,35 +20,46 @@ export async function render(container, params) {
                 <option value="8">Level 8</option>
                 <option value="9">Level 9</option>
             </select>
+            <select id="filter-class">
+                <option value="">All Classes</option>
+                <option value="wizard">Wizard</option>
+            </select>
         </div>
 
-        <div id="spell-list-container">Loading spells...</div>
+        <div id="spell-list-container"></div>
     `;
 
-    const spellListContainer = container.querySelector("#spell-list-container");
+    const spellListContainer = document.getElementById("spell-list-container");
+    spellListContainer.appendChild(renderThinkingMessage("Loading spells"));
+
     const spells = await getSpellList();
     let filtered = spells;
 
+    renderSpellList(spells);
+
     const filterName = container.querySelector("#filter-name");
     const filterLevel = container.querySelector("#filter-level");
+    const filterClass = container.querySelector("#filter-class");
 
     filterName.addEventListener("input", applyFilters);
     filterLevel.addEventListener("change", applyFilters);
+    filterClass.addEventListener("change", applyFilters);
 
     function applyFilters() {
         const nameValue = filterName.value.toLowerCase();
         const levelValue = filterLevel.value;
+        const classValue = filterClass.value;
 
         filtered = spells.filter(spell => {
             const matchesName = spell.name.toLowerCase().includes(nameValue);
             const matchesLevel = levelValue === "" || spell.level == levelValue;
-            return matchesName && matchesLevel;
+            const matchesClass = classValue === "" || spell.classes?.map(c => c.index).includes(classValue);
+            return matchesName && matchesLevel && matchesClass;
         });
 
         renderSpellList(filtered);
     }
 
-    renderSpellList(spells);
 }
 
 function renderSpellList(spells) {

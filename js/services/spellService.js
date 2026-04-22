@@ -1,8 +1,7 @@
 import { fetchJson } from "../api.js";
 
-export async function getSpellList() {
-    const spellList = await fetchJson("/spells");
-    return spellList.results;
+export function getSpellList() {
+    return fetchJson("/spells");
 }
 
 export function getSpellByIndex(index) {
