@@ -8,6 +8,8 @@ export async function render(container, params) {
     const spell = await getSpellByIndex(index);
     if (!spell) return renderError(container, "Spell not found.");
 
+    console.log("Rendering spell:", spell);
+
     container.innerHTML = renderSpellHtml(spell);
 
     setupAiPanel(container, spell);
@@ -18,34 +20,33 @@ function renderSpellHtml(spell) {
         <div class="spell-page">
             <div class="spell-main">
                 <div class="card spell-detail">
-                    <h2>${spell.name}</h2>
-                    <p class="text-muted">
-                        ${spell.level === 0 ? "Cantrip" : `Level ${spell.level}`} •
-                        ${spell.school?.name ?? ""}
-                    </p>
+                    <h2><span>${spell.name}</span></h2>
 
-                    <div class="spell-meta">
-                        ${renderMetaRow("Casting Time", spell.casting_time)}
-                        ${renderMetaRow("Range", spell.range)}
-                        ${renderMetaRow("Components", spell.components?.join(", "))}
-                        ${renderMetaRow("Duration", spell.duration)}
-                        ${renderMetaRow("Material", spell.material)}
-                        ${renderMetaRow("Ritual", spell.ritual ? "Yes" : "No")}
-                        ${renderMetaRow("Concentration", spell.concentration ? "Yes" : "No")}
-                        ${renderMetaRow("Attack Type", spell.attack_type)}
+                    <div class="spell-stat-block">
+                        ${renderStatBlockItem("Level", spell.level === 0 ? "Cantrip" : spell.level)}
+                        ${renderStatBlockItem("Casting Time", spell.casting_time)}
+                        ${renderStatBlockItem("Range", spell.range)}
+                        ${renderStatBlockItem("Components", spell.components?.join(", "))}
+                        ${renderStatBlockItem("Duration", spell.duration)}
+                        ${renderStatBlockItem("School", spell.school?.name)}
+                        ${renderStatBlockItem("Ritual", spell.ritual ? "Yes" : "No")}
+                        ${renderStatBlockItem("Concentration", spell.concentration ? "Yes" : "No")}
+                        ${renderStatBlockItem("Attack Type", spell.attack_type)}
                     </div>
+                    ${renderMaterial(spell.material)}
+
+                    
+                    <h3>Description</h3>
+                    ${renderParagraphs(spell.desc)}
+                    
+                    ${spell.higher_level?.length
+                    ? `<h3>At Higher Levels</h3>${renderParagraphs(spell.higher_level)}`
+                    : ""}
 
                     ${renderDamage(spell.damage)}
                     ${renderDc(spell.dc)}
                     ${renderAoe(spell.area_of_effect)}
-
-                    <h3>Description</h3>
-                    ${renderParagraphs(spell.desc)}
-
-                    ${spell.higher_level?.length
-            ? `<h3>At Higher Levels</h3>${renderParagraphs(spell.higher_level)}`
-            : ""}
-
+                    
                     <h3>Classes</h3>
                     <p>${spell.classes?.map(c => c.name).join(", ") || "None"}</p>
 
@@ -71,12 +72,19 @@ function renderSpellHtml(spell) {
     `;
 }
 
-function renderMetaRow(label, value) {
+function renderMaterial(material) {
+    if (!material) return "";
+    return `
+        <p class="material">Material: ${material}</p>
+    `;
+}
+
+function renderStatBlockItem(label, value) {
     if (!value) return "";
     return `
-        <div class="spell-meta-row">
-            <span class="label">${label}:</span>
-            <span>${value}</span>
+        <div class="spell-stat-block-item">
+            <p class="label">${label}:</p>
+            <p class="value">${value}</p>
         </div>
     `;
 }
@@ -195,7 +203,7 @@ function setupAiPanel(container, spell) {
 
     explainBtn.addEventListener("click", async () => {
         aiPanel.classList.add("open");
-        
+
         setLoading(true);
         const thinking = showThinking();
 

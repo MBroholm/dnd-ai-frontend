@@ -1,5 +1,5 @@
 /* ============================================
-    THEME TOKENS — LIGHT MODE
+    THEME TOKENS
    ============================================ */
 
 :root {
@@ -371,19 +371,31 @@ textarea:focus {
     margin-top: 0;
 }
 
-.spell-meta {
+.spell-stat-block {
     margin: var(--space-4) 0;
-}
-
-.spell-meta-row {
     display: flex;
-    gap: 10px;
-    margin-bottom: 6px;
+    flex-wrap: wrap;
+    border-top: var(--color-border) 1px solid;
+    border-bottom: var(--color-border) 1px solid;
 }
 
-.spell-meta-row .label {
+.spell-stat-block-item {
+    flex: 25%;
+    padding: var(--space-2);
+}
+
+.spell-stat-block-item .label {
     font-weight: bold;
-    width: 150px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.spell-stat-block-item .value {
+    margin-top: 0;
+}
+
+.spell-detail .material {
+    font-style: italic;
 }
 
 .spell-explanation h3 {
