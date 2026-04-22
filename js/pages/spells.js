@@ -33,6 +33,7 @@ export async function render(container, params) {
     spellListContainer.appendChild(renderThinkingMessage("Loading spells"));
 
     const spells = await getSpellList();
+    spells.sort((a, b) => a.name.localeCompare(b.name));
     let filtered = spells;
 
     renderSpellList(spells);
