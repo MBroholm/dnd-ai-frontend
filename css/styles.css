@@ -131,13 +131,29 @@ body {
     padding: 0 var(--space-4);
 }
 
-.mt-1 { margin-top: var(--space-1); }
-.mt-2 { margin-top: var(--space-2); }
-.mt-4 { margin-top: var(--space-4); }
-.mb-4 { margin-bottom: var(--space-4); }
+.mt-1 {
+    margin-top: var(--space-1);
+}
 
-.text-center { text-align: center; }
-.text-muted { color: var(--color-text-muted); }
+.mt-2 {
+    margin-top: var(--space-2);
+}
+
+.mt-4 {
+    margin-top: var(--space-4);
+}
+
+.mb-4 {
+    margin-bottom: var(--space-4);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: var(--color-text-muted);
+}
 
 .grid {
     display: grid;
@@ -228,7 +244,8 @@ button.accent:hover {
    ============================================ */
 
 input,
-textarea {
+textarea,
+select {
     width: 100%;
     padding: var(--space-2);
     border-radius: var(--radius-sm);
@@ -238,8 +255,13 @@ textarea {
     font-size: var(--font-size-md);
 }
 
+select {
+    width: auto;
+}
+
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
     outline: 2px solid var(--color-accent);
 }
 
@@ -352,6 +374,12 @@ textarea:focus {
     margin-top: var(--space-6);
 }
 
+.spell-filters {
+    display: flex;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
 /* --------------------------------------------------
     SPELL PAGE LAYOUT
 -------------------------------------------------- */
@@ -372,26 +400,27 @@ textarea:focus {
 }
 
 .spell-stat-block {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-2);
     margin: var(--space-4) 0;
-    display: flex;
-    flex-wrap: wrap;
+    padding: var(--space-2) 0;
     border-top: var(--color-border) 1px solid;
     border-bottom: var(--color-border) 1px solid;
 }
 
 .spell-stat-block-item {
-    flex: 25%;
     padding: var(--space-2);
 }
 
 .spell-stat-block-item .label {
     font-weight: bold;
     text-transform: uppercase;
-    margin-bottom: 0;
+    margin: 0;
 }
 
 .spell-stat-block-item .value {
-    margin-top: 0;
+    margin: 0;
 }
 
 .spell-detail .material {
@@ -463,9 +492,17 @@ textarea:focus {
 }
 
 @keyframes float {
-    0%   { transform: translateY(0); }
-    50%  { transform: translateY(-4px); }
-    100% { transform: translateY(0); }
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
 }
 
 .ai-spark:hover {
@@ -492,7 +529,7 @@ textarea:focus {
 .ai-message.assistant {
     text-align: left;
 }
-    
+
 .ai-input-row {
     display: flex;
     gap: 0.5rem;
@@ -519,8 +556,15 @@ textarea:focus {
 }
 
 @keyframes blink {
-    0% { opacity: 0.2; }
-    20% { opacity: 1; }
-    100% { opacity: 0.2; }
-}
+    0% {
+        opacity: 0.2;
+    }
 
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.2;
+    }
+}
