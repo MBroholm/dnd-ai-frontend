@@ -122,7 +122,19 @@ function renderError(container, message) {
 
 function renderParagraphs(arr) {
     if (!arr?.length) return "<p>No description available.</p>";
-    return `<div>${arr.map(p => `<p>${p}</p>`).join("")}</div>`;
+
+    const md = arr.join("\n\n");
+    const fixed = fixMarkdownTables(md);
+
+    return marked.parse(fixed);
+}
+
+function fixMarkdownTables(md) {
+    return md
+        // Insert blank line after table rows
+        .replaceAll(/(\|.*\|)\n(?!\|)/g, "$1\n\n")
+        // Remove double blank lines inside tables
+        .replaceAll(/\n\s*\n\|/g, "\n|")
 }
 
 
