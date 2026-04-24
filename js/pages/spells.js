@@ -1,5 +1,6 @@
 import { getSpellList } from "../services/spellService.js";
 import { renderThinkingMessage } from "../components/loadingDots.js";
+import { getClassList } from "../services/classService.js";
 
 export async function render(container, params) {
     container.innerHTML = `
@@ -22,7 +23,6 @@ export async function render(container, params) {
             </select>
             <select id="filter-class">
                 <option value="">All Classes</option>
-                <option value="wizard">Wizard</option>
             </select>
         </div>
 
@@ -41,6 +41,7 @@ export async function render(container, params) {
     const filterName = container.querySelector("#filter-name");
     const filterLevel = container.querySelector("#filter-level");
     const filterClass = container.querySelector("#filter-class");
+    populateClassFilter(filterClass);
 
     filterName.addEventListener("input", applyFilters);
     filterLevel.addEventListener("change", applyFilters);
@@ -61,6 +62,17 @@ export async function render(container, params) {
         renderSpellList(filtered);
     }
 
+}
+
+async function populateClassFilter(selectElement) {
+    const classes = await getClassList();
+
+    classes.forEach(cls => {
+        const option = document.createElement("option");
+        option.value = cls.index;
+        option.textContent = cls.name;
+        selectElement.appendChild(option);
+    });
 }
 
 function renderSpellList(spells) {

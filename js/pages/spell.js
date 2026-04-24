@@ -1,6 +1,7 @@
 import { getSpellByIndex } from "../services/spellService.js";
 import { chatAboutSpell, getSpellExplanation } from "../services/aiSpellService.js";
 import { renderThinkingMessage } from "../components/loadingDots.js";
+import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 export async function render(container, params) {
     const index = params.get("index");
