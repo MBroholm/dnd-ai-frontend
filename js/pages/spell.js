@@ -52,10 +52,10 @@ function renderSpellHtml(spell) {
                     <h3>Classes</h3>
                     <p>${spell.classes?.map(c => c.name).join(", ") || "None"}</p>
 
-                    <button id="explain-btn" class="accent mt-4">Explain this spell</button>
+                    <button id="explain-btn" class="accent mt-4" aria-label="Explain this spell">Explain this spell</button>
                 </div>
 
-                <button id="ai-panel-btn" class="ai-button-position ai-spark"></button>
+                <button id="ai-panel-btn" class="ai-button-position ai-spark" aria-label="Toggle AI Panel"></button>
             </div>
 
             <aside id="ai-sidepanel" class="ai-sidepanel">
@@ -67,7 +67,7 @@ function renderSpellHtml(spell) {
 
                 <div class="ai-input-row">
                     <input id="ai-input" type="text" placeholder="Ask something…" />
-                    <button id="ai-send-btn">Send</button>
+                    <button id="ai-send-btn" aria-label="Send">Send</button>
                 </div>
             </aside>
         </div>
