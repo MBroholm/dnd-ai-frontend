@@ -31,8 +31,8 @@ function renderLayout() {
     const headerRoot = document.getElementById('header-root');
     const footerRoot = document.getElementById('footer-root');
 
-    headerRoot.innerHTML = '';
-    footerRoot.innerHTML = '';
+    headerRoot.replaceChildren();
+    footerRoot.replaceChildren();
 
     headerRoot.appendChild(renderHeader());
     footerRoot.appendChild(renderFooter());

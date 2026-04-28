@@ -8,7 +8,7 @@ export async function render(container, params) {
 
         <div class="spell-filters">
             <input id="filter-name" type="text" placeholder="Search by name…" />
-            <select id="filter-level">
+            <select id="filter-level" aria-label="Filter by spell level">
                 <option value="">All Levels</option>
                 <option value="0">Cantrip</option>
                 <option value="1">Level 1</option>
@@ -21,7 +21,7 @@ export async function render(container, params) {
                 <option value="8">Level 8</option>
                 <option value="9">Level 9</option>
             </select>
-            <select id="filter-class">
+            <select id="filter-class" aria-label="Filter by class">
                 <option value="">All Classes</option>
             </select>
         </div>
